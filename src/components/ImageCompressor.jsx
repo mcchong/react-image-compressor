@@ -1,67 +1,70 @@
-import React from "react";
+import React from 'react'
 
-import imageCompression from "browser-image-compression";
+import imageCompression from 'browser-image-compression'
 
-import Card from "react-bootstrap/Card";
+import Card from 'react-bootstrap/Card'
+import { DemoComponent } from './DemoComponent'
 
 export default class imageCompressor extends React.Component {
-  constructor() {
-    super();
+  constructor () {
+    super()
     this.state = {
       compressedLink:
-        "http://navparivartan.in/wp-content/uploads/2018/11/placeholder.png",
-      originalImage: "",
-      originalLink: "",
+        'http://navparivartan.in/wp-content/uploads/2018/11/placeholder.png',
+      originalImage: '',
+      originalLink: '',
       clicked: false,
       uploadImage: false
-    };
+    }
   }
 
   handle = e => {
-    const imageFile = e.target.files[0];
+    const imageFile = e.target.files[0]
     this.setState({
       originalLink: URL.createObjectURL(imageFile),
       originalImage: imageFile,
       outputFileName: imageFile.name,
       uploadImage: true
-    });
+    })
   };
 
   changeValue = e => {
-    this.setState({ [e.target.name]: e.target.value });
+    this.setState({ [e.target.name]: e.target.value })
   };
 
   click = e => {
-    e.preventDefault();
+    e.preventDefault()
 
     const options = {
       maxSizeMB: 1,
       maxWidthOrHeight: 500,
       useWebWorker: true
-    };
-
-    if (options.maxSizeMB >= this.state.originalImage.size / 1024) {
-      alert("Image is too small, can't be Compressed!");
-      return 0;
     }
 
-    let output;
-    imageCompression(this.state.originalImage, options).then(x => {
-      output = x;
+    if (options.maxSizeMB >= this.state.originalImage.size / 1024) {
+      alert("Image is too small, can't be Compressed!")
+      return 0
+    }
 
-      const downloadLink = URL.createObjectURL(output);
+    let output
+    imageCompression(this.state.originalImage, options).then(x => {
+      output = x
+
+      const downloadLink = URL.createObjectURL(output)
       this.setState({
         compressedLink: downloadLink
-      });
-    });
+      })
+    })
 
-    this.setState({ clicked: true });
-    return 1;
+    this.setState({ clicked: true })
+    return 1
   };
 
-  render() {
+  render () {
+    const tmp = 0
     return (
       <div className="m-5">
+        <DemoComponent />
         <div className="text-light text-center">
           <h1>Three Simple Steps</h1>
           <h3>1. Upload Image</h3>
@@ -126,6 +129,6 @@ export default class imageCompressor extends React.Component {
           </div>
         </div>
       </div>
-    );
+    )
   }
 }
